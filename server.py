@@ -2,7 +2,9 @@ from flask import Flask, request, jsonify
 import util
 
 app = Flask(__name__)
-
+@app.route('/')
+def home():
+    return "welcome to home page of house price prediction app"
 @app.route('/get_location_names', methods=['GET'])
 def get_location_names():
     try:
