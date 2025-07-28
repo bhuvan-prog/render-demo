@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Bengaluru Home Price Prediction</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <div class="img"></div>
+
+  <div class="form">
+    <h2>Area (Square Feet)</h2>
+    <input type="text" id="uiSqft" class="area" placeholder="e.g. 1000" />
+
+    <h2>BHK</h2>
+    <div class="switch-field" id="uiBHK">
+      <input type="radio" id="bhk1" name="uiBHK" value="1" />
+      <label for="bhk1">1</label>
+      <input type="radio" id="bhk2" name="uiBHK" value="2" />
+      <label for="bhk2">2</label>
+      <input type="radio" id="bhk3" name="uiBHK" value="3" />
+      <label for="bhk3">3</label>
+      <input type="radio" id="bhk4" name="uiBHK" value="4" />
+      <label for="bhk4">4</label>
+      <input type="radio" id="bhk5" name="uiBHK" value="5" />
+      <label for="bhk5">5</label>
+    </div>
+
+    <h2>Bath</h2>
+    <div class="switch-field" id="uiBathrooms">
+      <input type="radio" id="bath1" name="uiBathrooms" value="1" />
+      <label for="bath1">1</label>
+      <input type="radio" id="bath2" name="uiBathrooms" value="2" />
+      <label for="bath2">2</label>
+      <input type="radio" id="bath3" name="uiBathrooms" value="3" />
+      <label for="bath3">3</label>
+      <input type="radio" id="bath4" name="uiBathrooms" value="4" />
+      <label for="bath4">4</label>
+      <input type="radio" id="bath5" name="uiBathrooms" value="5" />
+      <label for="bath5">5</label>
+    </div>
+
+    <h2>Location</h2>
+    <select id="uiLocations" class="location">
+      <option>Loading...</option>
+    </select>
+
+    <button class="submit" onclick="onClickedEstimatePrice()">Estimate Price</button>
+
+    <div id="uiEstimatedPrice" class="result"><h2></h2></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
