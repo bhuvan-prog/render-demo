@@ -1,39 +1,49 @@
-from flask import Flask, request, jsonify,render_template
+from flask import Flask, request, jsonify, render_template
 import util
 import os
-port=int(os.environ.get('PORT',5000))
+
+port = int(os.environ.get('PORT', 5000))
 
 app = Flask(__name__)
+
+# ✅ Load model and data columns at app startup (important for Render)
+util.load_saved_artifacts()
+
 @app.route('/')
 def home():
-    return  render_template('index.html') 
+    return render_template('index.html')
+
 @app.route('/get_location_names', methods=['GET'])
 def get_location_names():
     try:
         locations = util.get_location_names()
+        print("LOCATIONS RETURNED:", locations)
         response = jsonify({'locations': locations})
     except Exception as e:
+        print("❌ ERROR in /get_location_names:", e)
         response = jsonify({'error': str(e)})
+
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 @app.route('/predict_home_price', methods=['POST'])
 def predict_home_price():
     try:
-        total_sqft = float(request.form.get('total_sqft',0))
-        location = request.form.get('location','')
-        bhk = int(request.form.get('bhk',0))
-        bath = int(request.form.get('bath',0))
+        total_sqft = float(request.form.get('total_sqft', 0))
+        location = request.form.get('location', '')
+        bhk = int(request.form.get('bhk', 0))
+        bath = int(request.form.get('bath', 0))
 
         estimated_price = util.get_estimated_price(location, total_sqft, bhk, bath)
+        print(f"Prediction for {location}, {total_sqft} sqft, {bhk} BHK, {bath} Bath: ₹{estimated_price} Lakhs")
         response = jsonify({'estimated_price': estimated_price})
     except Exception as e:
-        response=jsonify({'error':str(e)})
+        print("❌ ERROR in /predict_home_price:", e)
+        response = jsonify({'error': str(e)})
 
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 if __name__ == "__main__":
     print("Starting Python Flask Server For Home Price Prediction...")
-    util.load_saved_artifacts()
-    app.run(host='0.0.0.0',port=port,debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)
